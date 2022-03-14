@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+ <html>
+ <center> <table cellspacing="8" cellpadding="20" border="3" bgcolor="#000000">
+ <tr>
+   <td><font color="#ffffff" face="Serif, verdana, helvetica">
+ <b> <center>GPS INFORMATION</b>
+   </font></td>
+ </tr>
+ <tr>
+   <td bgcolor="#ff8000">
+   <font face="serif verdana, arial">
+    <body style="background-color:White;">
+ 
+    
+    </style>
+</head>
+    <div>
+   <center>
+    <div><label>Latitud </label>
+        <label id="latID" style="margin-left: 20px; border:1px outset black; blockquote: 7px; width:600px; "></label>
+    </div>
+
+    <div><label>Longitud</label>
+
+        <label id="longID" style="margin-left: 20px;border:1px outset black; blockquote: 7px; width:600px; "></label>
+    </div>
+
+    <div><label>TimeStamp</label>
+        <label id="dateID" style="margin-left: 20px;border:1px outset black; blockquote: 7px; width:600px; "></label>
+    </div>
+
+
+    </div>
+
+    <script>
+        const latID = document.getElementById('latID');
+        const longID = document.getElementById('longID');
+        const dateID = document.getElementById('dateID');
+        const timeID = document.getElementById('timeID');
+        
+        const showData = async () => {
+            fetch('/data', {
+                // mode: 'no-cors',
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                },
+            },
+            ).then(response => {
+                if (response.ok) {
+                    response.json().then(json => {
+                        console.log(json);
+                        latID.textContent = json.lat;
+                        longID.textContent = json.lng;
+                        dateID.textContent = json.date.split("T")[0] + " - " + json.hour;
+                    });
+                }
+            });
+        };
+        showData();
+        const timer = setInterval(() => {
+            showData();
+        }, 5000);
+    </script>
+    </body>
+
+</html>
+
+
+
+
+
